@@ -166,7 +166,7 @@ function openDrawer(which){
  if(which==='cart'){const total=list.reduce((s,p)=>s+p.price*cart[p.id],0);const sum=document.createElement('div');sum.className='total';sum.innerHTML='<span>Jami</span><span>'+fmt(total)+'</span>';root.append(sum);const note=document.createElement('div');note.className='notice';note.textContent='Savatcha hozircha ushbu qurilmada saqlanadi. Buyurtma yuborish funksiyasi keyingi bosqichda ulanadi.';root.append(note)}
 }
 $('closeDrawer').onclick=()=>$('overlay').classList.remove('open');$('overlay').onclick=e=>{if(e.target===$('overlay'))$('overlay').classList.remove('open')};
-$('cartTop').onclick=()=>openDrawer('cart');$('navCart').onclick=()=>openDrawer('cart');$('favTop').onclick=()=>openDrawer('favorites');$('navFav').onclick=()=>openDrawer('favorites');
+$('cartTop').onclick=()=>openDrawer('cart');$('navCart').onclick=()=>openDrawer('cart');$('favTop').onclick=()=>openDrawer('favorites');
 $('search').addEventListener('input',render);
 document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));b.classList.add('active');category=b.dataset.cat||'';render();document.getElementById('catalog').scrollIntoView({behavior:'smooth'})});
 document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render()});
