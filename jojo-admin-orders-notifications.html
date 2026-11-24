@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JOJO Admin</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f3f1;color:#222;font-family:system-ui,sans-serif}.top{background:#512b3b;color:white;padding:18px}.top h1{font-size:21px;margin:0}.top p{margin:4px 0 0;font-size:13px}main{max-width:760px;margin:auto;padding:14px}.card{background:white;border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 12px #32101812}h2{font-size:18px;margin:0 0 12px}label{display:block;font-size:13px;font-weight:650;margin:12px 0 5px}input,textarea,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;font:inherit;background:#fff}textarea{min-height:70px}button{border:0;border-radius:10px;padding:12px 15px;background:#713b51;color:white;font:inherit;font-weight:650}.secondary{background:#eee;color:#333}.danger{background:#a83232}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}.hidden{display:none!important}#status{padding:10px;border-radius:10px;background:#f1e8ec;margin-bottom:12px;font-size:13px;white-space:pre-wrap}.product{display:flex;gap:10px;border-top:1px solid #eee;padding:12px 0;align-items:center}.product img{width:70px;height:85px;object-fit:cover;border-radius:8px;background:#eee}.info{flex:1;min-width:0}.info strong{display:block}.pill{font-size:11px;padding:3px 7px;border-radius:20px;background:#eee;display:inline-block;margin-top:5px}.order-status{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.order-status select{flex:1;min-width:180px}.order-status button{white-space:nowrap}.new-order-count{margin:0 8px 10px 0;background:#f8e5e8;color:#8a2338;font-weight:750;padding:6px 10px}.new-order-count.zero{background:#eee;color:#555}#newOrderAlert{background:#fff1d6;border:1px solid #f0d18d;color:#694b11;padding:11px 12px;border-radius:10px;margin:0 0 12px;font-size:13px;font-weight:650}#notificationHint{font-size:12px;color:#756970;margin:6px 0 0}
+</style></head><body><header class="top"><h1>JOJO BOLALAR DUNYOSI</h1><p>Mahsulotlarni boshqarish paneli</p></header><main>
+<div id="status">Supabase Project URL va Publishable key ni kiriting. Secret/service_role kalitini kiritmang.</div>
+<section class="card" id="setup"><h2>1. Supabase ulanishi</h2><label>Project URL</label><input id="url" value="https://vnsyyqbgspxgbttmmuuz.supabase.co"><label>Publishable key</label><input id="key" placeholder="sb_publishable_..." autocomplete="off"><p><button id="connect">Ulanish</button></p></section>
+<section class="card hidden" id="login"><h2>2. Admin kirish</h2><label>Email</label><input id="email" type="email"><label>Parol</label><input id="password" type="password"><div class="row"><button id="signin">Kirish</button><button class="secondary" id="signout">Chiqish</button></div></section>
+<section class="card hidden" id="editor"><h2 id="formtitle">3. Mahsulot qo‘shish</h2><input id="pid" type="hidden"><label>Mahsulot nomi *</label><input id="name" placeholder="Pushti palto komplekti"><label>Kategoriya</label><select id="category"><option value="">Tanlang</option><option>Poyabzallar</option><option>Shim va shortiklar</option><option>Koftalar / svitshotlar</option><option>Sviterlar</option><option>Bodiylar</option><option>Slipperlar</option><option>Kambinzonlar</option><option>Paypoqlar</option><option>Aksessuarlar</option><option>Shapkalar</option><option>Sumkalar</option><option>O‘yinchoqlar</option><option>Bolalar aravachasi</option><option>Bolalar belanchaklari</option><option>Velosipedlar</option><option>Pampers va salfetkalar</option><option>Parfyumeriyalar</option><option>Zakolkalar</option><option>Radom uchun kiyimlar</option><option>Ko‘ylaklar</option></select><label>Yosh guruhi</label><select id="age_group"><option value="">Tanlanmagan</option><option>1-oydan 1 yoshgacha</option><option>6 oydan 24 oygacha</option><option>1 yoshdan 5 yoshgacha</option><option>2 yoshdan 6 yoshgacha</option><option>5 yoshdan 10 yoshgacha</option></select><div class="row"><div><label>Narxi (so‘m) *</label><input id="price" type="number" min="0"></div><div><label>Razmer</label><input id="size" placeholder="130 cm"></div></div><div class="row"><div><label>Soni</label><input id="quantity" type="number" min="0" value="1"></div><div><label>Holati</label><select id="published"><option value="false">Yashirin</option><option value="true">Do‘konda ko‘rinsin</option></select></div></div><label>Tavsif</label><textarea id="description"></textarea><label>Mahsulot rasmi</label><input id="photo" type="file" accept="image/*"><div class="row"><button id="save">Saqlash</button><button class="secondary" id="reset">Tozalash</button></div></section>
+<section class="card hidden" id="catalog"><div class="row"><h2 style="flex:2">Mahsulotlar</h2><button class="secondary" id="refresh">Yangilash</button></div><div id="items"></div></section>
+<section class="card hidden" id="orders"><div class="row"><h2 style="flex:2">Buyurtmalar</h2><button class="secondary" id="refreshOrders">Yangilash</button></div><span id="newOrderCount" class="pill new-order-count zero">Yangi buyurtmalar: 0</span><button class="secondary" id="enableNotifications" type="button">Bildirishnomani yoqish</button><p id="notificationHint">Yangi buyurtmalar soni har 30 soniyada tekshiriladi. Bildirishnoma panel ochiq turganda ishlaydi.</p><div id="newOrderAlert" hidden role="status" aria-live="polite"></div><div id="orderItems">Buyurtmalar yuklanmoqda...</div></section></main>
+<script>
+let sb=null,currentImage=null,orderPollTimer=null,lastNewOrderIds=null,orderPollBusy=false;const $=id=>document.getElementById(id);function msg(s){$('status').textContent=s}function show(id,on=true){$(id).classList.toggle('hidden',!on)}
+function resetForm(){['pid','name','category','age_group','price','size','description'].forEach(x=>$(x).value='');$('quantity').value=1;$('published').value='false';$('photo').value='';currentImage=null;$('formtitle').textContent='3. Mahsulot qo‘shish'}
+$('connect').onclick=async()=>{let url=$('url').value.trim(),key=$('key').value.trim();if(!url||!key){msg('Project URL va Publishable key ni kiriting.');return}try{sb=window.supabase.createClient(url,key);let {data,error}=await sb.auth.getSession();if(error)throw error;show('login');msg('Ulanish tayyor. Admin hisobingiz bilan kiring.');if(data.session){show('editor');show('catalog');show('orders');loadProducts();loadOrders();startOrderPolling()}}catch(e){msg('Ulanish xatosi: '+e.message)}};
+$('signin').onclick=async()=>{try{let {error}=await sb.auth.signInWithPassword({email:$('email').value,password:$('password').value});if(error)throw error;show('editor');show('catalog');show('orders');msg('Admin tizimga kirdi.');loadProducts();loadOrders();startOrderPolling()}catch(e){msg('Kirish xatosi: '+e.message)}};
+$('signout').onclick=async()=>{if(orderPollTimer){clearInterval(orderPollTimer);orderPollTimer=null}lastNewOrderIds=null;if(sb)await sb.auth.signOut();show('editor',false);show('catalog',false);show('orders',false);msg('Tizimdan chiqildi.')};$('reset').onclick=resetForm;$('refresh').onclick=loadProducts;$('refreshOrders').onclick=async()=>{await loadOrders();await refreshNewOrderCount(false)};$('enableNotifications').onclick=enableOrderNotifications;
+$('save').onclick=async()=>{if(!sb)return;let name=$('name').value.trim(),price=Number($('price').value);if(!name||!Number.isFinite(price)||price<0){msg('Mahsulot nomi va narxini to‘g‘ri kiriting.');return}try{let image_url=currentImage,file=$('photo').files[0];if(file){let ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,''),path='products/'+Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext;let {error}=await sb.storage.from('Products').upload(path,file,{contentType:file.type});if(error)throw error;image_url=sb.storage.from('Products').getPublicUrl(path).data.publicUrl}let record={name,category:$('category').value.trim(),age_group:$('age_group').value,price,size:$('size').value.trim(),quantity:Number($('quantity').value||0),description:$('description').value.trim(),image_url,published:$('published').value==='true'};let result=$('pid').value?await sb.from('products').update(record).eq('id',$('pid').value):await sb.from('products').insert(record);if(result.error)throw result.error;msg('Mahsulot saqlandi.');resetForm();loadProducts()}catch(e){msg('Saqlash xatosi: '+e.message)}};
+async function loadProducts(){try{let {data,error}=await sb.from('products').select('*').order('created_at',{ascending:false});if(error)throw error;$('items').innerHTML='';(data||[]).forEach(p=>{let d=document.createElement('div');d.className='product';let im=document.createElement('img');im.src=p.image_url||'';let inf=document.createElement('div');inf.className='info';let t=document.createElement('strong');t.textContent=p.name;let dt=document.createElement('div');dt.textContent=Number(p.price).toLocaleString('uz-UZ')+' so‘m · '+(p.size||'Razmer yo‘q')+' · Soni: '+p.quantity;let pill=document.createElement('span');pill.className='pill';pill.textContent=p.published?'Do‘konda':'Yashirin';inf.append(t,dt,pill);let ed=document.createElement('button');ed.textContent='Tahrir';ed.onclick=()=>editProduct(p);let del=document.createElement('button');del.className='danger';del.textContent='O‘chir';del.onclick=()=>deleteProduct(p.id);d.append(im,inf,ed,del);$('items').append(d)})}catch(e){msg('Mahsulotlarni olish xatosi: '+e.message)}}
+function editProduct(p){$('pid').value=p.id;$('name').value=p.name||'';$('category').value=p.category||'';$('age_group').value=p.age_group||'';$('price').value=p.price??'';$('size').value=p.size||'';$('quantity').value=p.quantity??0;$('description').value=p.description||'';$('published').value=String(!!p.published);currentImage=p.image_url||null;$('formtitle').textContent='Mahsulotni tahrirlash';window.scrollTo(0,0)}
+async function deleteProduct(id){if(!confirm('Mahsulotni o‘chirasizmi?'))return;let {error}=await sb.from('products').delete().eq('id',id);if(error)msg('O‘chirish xatosi: '+error.message);else{msg('Mahsulot o‘chirildi.');loadProducts()}}
+
+function safeText(v){return String(v??'')}
+function formatDate(v){if(!v)return 'Sana ko‘rsatilmagan';const d=new Date(v);return Number.isNaN(d.getTime())?safeText(v):d.toLocaleString('uz-UZ')}
+const ORDER_STATUSES=[['new','Yangi'],['accepted','Qabul qilindi'],['preparing','Tayyorlanmoqda'],['delivered','Yetkazildi'],['cancelled','Bekor qilindi']];
+async function updateOrderStatus(orderId,select,button,statusLabel){
+  const nextStatus=select.value;
+  const previousStatus=select.dataset.savedStatus||'';
+  if(nextStatus===previousStatus){msg('Buyurtma holati o‘zgarmagan.');return;}
+  button.disabled=true;button.textContent='Saqlanmoqda...';
+  try{
+    const {error}=await sb.from('orders').update({status:nextStatus}).eq('id',orderId);
+    if(error)throw error;
+    const label=ORDER_STATUSES.find(([value])=>value===nextStatus)?.[1]||nextStatus;
+    statusLabel.textContent='Holati: '+label;
+    select.dataset.savedStatus=nextStatus;
+    button.textContent='Xabar yuborilmoqda...';
+    const {data:notice,error:noticeError}=await sb.functions.invoke('notify-order-status',{
+      body:{order_id:orderId,status:nextStatus}
+    });
+    if(noticeError){
+      button.textContent='Holat saqlandi';
+      msg('Holat saqlandi, lekin Telegram xabari yuborilmadi: '+noticeError.message);
+    }else if(notice?.sent){
+      button.textContent='Saqlandi ✓';
+      msg('Buyurtma holati saqlandi va mijozga Telegram xabari yuborildi.');
+    }else if(notice?.reason==='phone_not_linked'){
+      button.textContent='Holat saqlandi';
+      msg('Holat saqlandi, ammo mijoz bu telefon raqamini Telegram botga bog‘lamagan.');
+    }else{
+      button.textContent='Holat saqlandi';
+      msg('Holat saqlandi. Telegram xabari yuborilmadi: '+(notice?.reason||'noma’lum sabab'));
+    }
+    await refreshNewOrderCount(false);
+  }catch(e){
+    button.textContent='Qayta urinish';
+    msg('Holatni saqlash xatosi: '+e.message);
+  }finally{button.disabled=false;}
+}
+async function refreshNewOrderCount(allowNotify=true){
+  if(!sb)return;
+  try{
+    const {data,error}=await sb.from('orders').select('id').eq('status','new');
+    if(error)throw error;
+    const ids=(data||[]).map(row=>String(row.id));
+    const badge=$('newOrderCount');
+    badge.textContent='Yangi buyurtmalar: '+ids.length;
+    badge.classList.toggle('zero',ids.length===0);
+    document.title=(ids.length?'('+ids.length+') ':'')+'JOJO Admin';
+    let newlyArrived=[];
+    if(lastNewOrderIds!==null&&allowNotify){
+      const previous=lastNewOrderIds;
+      newlyArrived=ids.filter(id=>!previous.has(id));
+    }
+    lastNewOrderIds=new Set(ids);
+    if(newlyArrived.length){
+      const text='Yangi '+newlyArrived.length+' ta buyurtma keldi! Jami yangi buyurtmalar: '+ids.length+'.';
+      const alertBox=$('newOrderAlert');alertBox.textContent=text;alertBox.hidden=false;
+      if('Notification' in window&&Notification.permission==='granted'){
+        try{new Notification('JOJO SHOP — yangi buyurtma',{body:text,icon:'https://cdn-icons-png.flaticon.com/512/2331/2331966.png'})}catch(_e){}
+      }
+      await loadOrders();
+    }
+  }catch(e){
+    $('notificationHint').textContent='Yangi buyurtmalar sonini tekshirishda xatolik: '+e.message;
+  }
+}
+function startOrderPolling(){
+  if(orderPollTimer)clearInterval(orderPollTimer);
+  lastNewOrderIds=null;
+  refreshNewOrderCount(false);
+  orderPollTimer=setInterval(async()=>{
+    if(orderPollBusy||!sb)return;
+    orderPollBusy=true;
+    try{await refreshNewOrderCount(true)}finally{orderPollBusy=false}
+  },30000);
+}
+async function enableOrderNotifications(){
+  if(!('Notification' in window)){
+    $('notificationHint').textContent='Bu brauzer ish stoli bildirishnomalarini qo‘llab-quvvatlamaydi. Hisoblagich panelda ishlayveradi.';
+    return;
+  }
+  try{
+    const permission=await Notification.requestPermission();
+    if(permission==='granted'){
+      $('enableNotifications').textContent='Bildirishnoma yoqilgan';
+      $('notificationHint').textContent='Ruxsat berildi. Yangi buyurtma kelganda ish stoli bildirishnomasi chiqadi (panel ochiq turganda).';
+    }else{
+      $('notificationHint').textContent='Bildirishnomaga ruxsat berilmadi. Hisoblagich va panel ichidagi ogohlantirish baribir ishlaydi.';
+    }
+  }catch(e){$('notificationHint').textContent='Bildirishnoma sozlamasi: '+e.message;}
+}
+function orderItemsText(items){
+  if(!Array.isArray(items))return safeText(items||'Tarkib ko‘rsatilmagan');
+  return items.map(it=>{
+    if(typeof it==='string')return it;
+    if(!it||typeof it!=='object')return safeText(it);
+    const name=it.name||it.title||it.product_name||'Mahsulot';
+    const qty=it.quantity??it.qty??1;
+    const price=it.price??it.unit_price;
+    return `${name} × ${qty}${price!=null?' — '+Number(price).toLocaleString('uz-UZ')+' so‘m':''}`;
+  }).join('\n')||'Tarkib ko‘rsatilmagan';
+}
+async function loadOrders(){
+  if(!sb)return;
+  const root=$('orderItems');root.textContent='Buyurtmalar yuklanmoqda...';
+  try{
+    const {data,error}=await sb.from('orders')
+      .select('id,customer_name,phone,address,items,total,status,created_at')
+      .order('created_at',{ascending:false});
+    if(error)throw error;
+    root.innerHTML='';
+    if(!data||!data.length){root.textContent='Hozircha buyurtmalar yo‘q.';return;}
+    data.forEach(o=>{
+      const card=document.createElement('div');
+      card.style.cssText='border-top:1px solid #eee;padding:14px 0;display:grid;gap:6px';
+      const heading=document.createElement('strong');
+      heading.textContent=`Buyurtma #${String(o.id).slice(0,8)} · ${formatDate(o.created_at)}`;
+      const customer=document.createElement('div');
+      customer.textContent=`Mijoz: ${safeText(o.customer_name)} · Tel: ${safeText(o.phone)}`;
+      const address=document.createElement('div');
+      address.textContent='Manzil: '+safeText(o.address);
+      const contents=document.createElement('div');
+      contents.style.cssText='white-space:pre-line;color:#51434a;font-size:13px';
+      contents.textContent='Mahsulotlar:\n'+orderItemsText(o.items);
+      const total=document.createElement('strong');
+      total.textContent='Jami: '+Number(o.total||0).toLocaleString('uz-UZ')+' so‘m';
+      const statusLabel=document.createElement('span');
+      statusLabel.className='pill';
+      const currentStatus=o.status||'new';
+      const currentLabel=ORDER_STATUSES.find(([value])=>value===currentStatus)?.[1]||currentStatus;
+      statusLabel.textContent='Holati: '+currentLabel;
+      const statusRow=document.createElement('div');
+      statusRow.className='order-status';
+      const statusSelect=document.createElement('select');
+      statusSelect.dataset.savedStatus=currentStatus;
+      statusSelect.setAttribute('aria-label','Buyurtma holati');
+      ORDER_STATUSES.forEach(([value,label])=>{
+        const option=document.createElement('option');option.value=value;option.textContent=label;
+        if(value===currentStatus)option.selected=true;
+        statusSelect.append(option);
+      });
+      if(!ORDER_STATUSES.some(([value])=>value===currentStatus)){
+        const option=document.createElement('option');option.value=currentStatus;option.textContent=currentStatus;option.selected=true;statusSelect.append(option);
+      }
+      const saveStatus=document.createElement('button');
+      saveStatus.type='button';saveStatus.textContent='Holatni saqlash';
+      saveStatus.onclick=()=>updateOrderStatus(o.id,statusSelect,saveStatus,statusLabel);
+      statusRow.append(statusSelect,saveStatus);
+      card.append(heading,customer,address,contents,total,statusLabel,statusRow);
+      root.append(card);
+    });
+  }catch(e){
+    root.textContent='Buyurtmalarni olish xatosi: '+e.message;
+  }
+}
+
+</script></body></html>
