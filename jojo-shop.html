@@ -1,286 +1,71 @@
 <!doctype html>
-<html lang="uz">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#4b2637">
-<title>JOJO — Bolalar dunyosi</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JOJO Admin</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--wine:#9a6a2d;--wine2:#b4874c;--rose:#eee5d5;--cream:#faf7ef;--ink:#24211d;--muted:#81796d;--line:#e9e2d6;--white:#fff;--gold:#a77a3b}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:78px}
-button,input{font:inherit}button{cursor:pointer}.announcement{background:var(--wine);color:#fff;text-align:center;padding:8px 12px;font-size:11px;letter-spacing:.6px}
-header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
-.head{max-width:1180px;margin:auto;padding:13px 18px;display:flex;align-items:center;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--wine);min-width:0}
-.brandmark{width:42px;height:42px;border-radius:14px;background:var(--wine);display:grid;place-items:center;color:#fff;font-family:Georgia,serif;font-size:22px;letter-spacing:-2px}
-.brandname{font-family:Georgia,serif;font-weight:700;font-size:19px;letter-spacing:.4px;white-space:nowrap}.brandtag{font-size:9px;color:var(--muted);letter-spacing:2px;margin-top:2px}
-.search{flex:1;position:relative;max-width:460px;margin-left:auto}.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#988b91}
-.search input{width:100%;border:1px solid var(--line);background:#faf8f7;border-radius:12px;padding:12px 14px 12px 40px;outline:none;font-size:13px}.search input:focus{border-color:#b99aa7;background:#fff}
-.actions{display:flex;gap:7px}.iconbtn{position:relative;border:1px solid var(--line);background:#fff;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--wine)}.count{position:absolute;right:-4px;top:-5px;background:var(--wine2);color:white;font-size:9px;min-width:17px;height:17px;border-radius:99px;display:grid;place-items:center;padding:0 4px}
-main{max-width:1180px;margin:auto;padding:0 18px}
-.hero{margin:20px 0 26px;min-height:230px;border-radius:22px;overflow:hidden;position:relative;background:linear-gradient(100deg,rgba(54,25,39,.91),rgba(74,39,55,.62)),none;background-color:#654456;background-size:cover;background-position:center;display:flex;align-items:center}
-.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(42,19,30,.25),transparent 75%);pointer-events:none}
-.hero-content{position:relative;z-index:1;color:#fff;padding:30px 28px;max-width:570px}.eyebrow{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#f0d9e2}.hero h1{font-family:Georgia,serif;font-size:clamp(28px,5vw,43px);font-weight:500;line-height:1.12;margin:10px 0}.hero p{font-size:13px;line-height:1.7;color:#f5eaf0;max-width:390px;margin:0 0 18px}.primary{border:0;background:#fff;color:var(--wine);border-radius:10px;padding:12px 17px;font-size:12px;font-weight:750;display:inline-flex;align-items:center;gap:8px}
-.section{margin:24px 0 30px}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px}.sectionhead h2{font-family:Georgia,serif;font-weight:600;font-size:23px;margin:0;color:var(--wine)}.sectionhead p{font-size:11px;color:var(--muted);margin:5px 0 0}.subtlebtn{border:0;background:transparent;color:var(--wine2);font-size:11px;font-weight:700;padding:8px}
-.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.cat{border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px 6px;text-align:center;color:var(--wine);transition:.18s}.cat:active,.cat.active{border-color:#b995a5;background:#f6eef1}.caticon{width:42px;height:42px;margin:0 auto 8px;border-radius:14px;background:#f5edf0;display:grid;place-items:center}.cat span:last-child{font-size:11px;font-weight:700}
-.age-filter-wrap{margin-top:18px}.age-title{font-size:13px;font-weight:750;color:#756044;margin:0 0 8px}.filters{display:flex;gap:7px;overflow:auto;padding:1px 0 8px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}.chip{white-space:nowrap;border:1px solid var(--line);background:#fff;color:#71636a;border-radius:99px;padding:8px 13px;font-size:11px}.chip.active{background:var(--wine);border-color:var(--wine);color:#fff}
-.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;min-width:0}.photo{position:relative;background:#f1ecee;aspect-ratio:4/5;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s;cursor:zoom-in}.product:active .photo img{transform:scale(1.02)}.heart{position:absolute;right:9px;top:9px;width:34px;height:34px;border:0;border-radius:50%;background:#ffffffeb;display:grid;place-items:center;color:#765464}.heart.on{color:#bd526f}.tag{position:absolute;left:9px;top:9px;background:#fff;color:var(--wine);font-size:9px;font-weight:800;border-radius:6px;padding:6px 8px}
-.pinfo{padding:11px}.pname{font-size:12px;font-weight:700;line-height:1.4;min-height:34px}.pmeta{font-size:10px;color:var(--muted);margin-top:4px}.pfoot{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-top:10px}.price{font-size:13px;font-weight:800;color:var(--wine)}.add{width:38px;height:38px;border:0;border-radius:12px;background:var(--wine);color:#fff;display:grid;place-items:center;flex-shrink:0;box-shadow:0 5px 12px #4b263733;transition:transform .18s,background .18s}.add:active{transform:scale(.88)}.add.bump{animation:cartPop .48s ease}@keyframes cartPop{0%{transform:scale(1)}35%{transform:scale(1.28) rotate(-8deg)}70%{transform:scale(.92) rotate(5deg)}100%{transform:scale(1)}}
-.checkout-form select{display:block;width:100%;margin-top:5px;border:1px solid var(--line);border-radius:9px;padding:12px;background:#fff;color:var(--ink);font:inherit;font-size:13px}.size-entry{margin-top:9px}.size-entry label{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:4px}.size-entry input{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;font-size:12px}.delivery-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.delivery-option{border:1px solid var(--line);border-radius:10px;padding:11px;font-size:12px;color:var(--ink);display:flex;gap:8px;align-items:center}.delivery-option input{width:auto;margin:0}.map-links{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.map-links a{font-size:11px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:9px 11px;color:var(--wine);background:#fff}.contact-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.contact-links a{color:var(--wine);font-size:12px;text-decoration:none;font-weight:700}
-.empty{grid-column:1/-1;text-align:center;background:#fff;border:1px dashed #dfd1d8;border-radius:15px;padding:32px 15px;color:var(--muted);font-size:13px}
-.promise{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:30px 0}.promiseitem{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px;display:flex;gap:10px;align-items:center}.promiseicon{color:var(--wine2)}.promise strong{display:block;font-size:11px}.promise small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
-footer{background:#432333;color:#f5eaf0;padding:26px 18px;margin-top:32px}.footinner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footbrand{font-family:Georgia,serif;font-size:19px}.footnote{font-size:10px;color:#d7c5ce;margin-top:7px}
-.bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:30;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:12px 5px calc(13px + env(safe-area-inset-bottom));min-height:82px;align-items:center}.navitem{border:0;background:none;color:#8a7d83;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:12px;min-width:68px;min-height:58px;font-weight:600}.navitem span{font-size:27px;line-height:1.1}.navitem.active{color:var(--wine);font-weight:800}
-.overlay{position:fixed;inset:0;background:#20151bc0;z-index:50;display:none;align-items:end;justify-content:center}.overlay.open{display:flex}.drawer{background:#fff;width:100%;max-width:560px;max-height:85vh;border-radius:20px 20px 0 0;padding:18px;overflow:auto}.drawhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.drawhead h3{margin:0;font-family:Georgia,serif;color:var(--wine);font-size:22px}.close{border:0;background:#f5eef1;border-radius:50%;width:34px;height:34px;color:var(--wine);font-size:18px}
-.cartrow{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);align-items:center}.cartrow img{width:58px;height:68px;object-fit:cover;border-radius:9px;background:#eee}.carttext{flex:1;min-width:0}.carttext strong{font-size:12px;display:block}.carttext small{color:var(--muted);font-size:10px}.qty{display:flex;align-items:center;gap:8px}.qty button{border:1px solid var(--line);background:#fff;border-radius:7px;width:25px;height:25px;color:var(--wine)}
-.total{display:flex;justify-content:space-between;font-weight:800;color:var(--wine);padding:15px 0}.wide{width:100%;justify-content:center;background:var(--wine);color:#fff;border:0;border-radius:11px;padding:13px;font-weight:750}.notice{font-size:11px;color:var(--muted);line-height:1.6;margin-top:10px}.checkout-form{display:grid;gap:9px;margin-top:14px}.checkout-form label{font-size:11px;color:var(--muted);font-weight:700}.checkout-form input,.checkout-form textarea{display:block;width:100%;margin-top:5px;border:1px solid var(--line);border-radius:9px;padding:12px;background:#fff;color:var(--ink);font:inherit;font-size:13px;outline:none}.checkout-form textarea{min-height:70px;resize:vertical}.checkout-form .wide{margin-top:3px}.checkout-error{color:#b42318;font-size:12px;margin-top:8px}
-#imageLightbox{position:fixed;inset:0;z-index:90;background:rgba(20,15,17,.88);display:none;align-items:center;justify-content:center;padding:18px}#imageLightbox.open{display:flex}.lightbox-panel{position:relative;width:min(92vw,560px);display:flex;flex-direction:column;align-items:center;gap:10px}.lightbox-image-wrap{width:min(92vw,560px);height:min(92vw,560px,78vh);aspect-ratio:1/1;background:#f7f2e9;border-radius:16px;overflow:hidden;display:grid;place-items:center}.lightbox-image-wrap img{width:100%;height:100%;object-fit:contain;display:block}.lightbox-caption{color:#fff;font-size:14px;text-align:center;font-weight:650}.lightbox-close{position:absolute;right:-8px;top:-48px;border:0;border-radius:50%;width:38px;height:38px;background:#fff;color:#432333;font-size:24px;line-height:1}.photo img:hover{filter:brightness(.97)}@media(max-width:420px){.lightbox-panel{width:92vw}.lightbox-image-wrap{width:92vw;height:92vw;max-height:76vh}}
-.setup{max-width:1180px;margin:18px auto;padding:0 18px}.setup details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px}.setup summary{font-size:11px;color:var(--muted);cursor:pointer}.setup label{display:block;font-size:11px;margin:10px 0 4px}.setup input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px}.setup button{background:var(--wine);color:#fff;border:0;border-radius:8px;padding:10px 14px;margin-top:10px;font-size:11px}
-@media(min-width:650px){body{padding-bottom:0}.announcement{font-size:12px}.head{padding:16px 22px}.brandname{font-size:22px}.hero{min-height:300px;margin-top:25px}.hero-content{padding:42px}.categories{grid-template-columns:repeat(6,1fr);gap:13px}.products{grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.photo{aspect-ratio:4/4.7}.pinfo{padding:14px}.pname{font-size:14px}.price{font-size:15px}.promise{grid-template-columns:repeat(4,1fr)}.bottomnav{display:none}.overlay{align-items:center}.drawer{border-radius:20px;margin:20px}.search{margin-left:25px}}
-@media(min-width:950px){.products{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{min-height:340px}.hero-content{padding:52px}.categories{grid-template-columns:repeat(8,1fr)}}
-@media(max-width:390px){.brandtag{letter-spacing:1px}.brandname{font-size:16px}.brandmark{width:36px;height:36px}.head{gap:9px;padding:11px}.actions{gap:4px}.iconbtn{width:37px;height:37px}.hero-content{padding:23px 20px}.categories{gap:7px}.cat{padding:11px 3px}.cat span:last-child{font-size:10px}}
-
-/* JOJO warm editorial storefront skin */
-body{background:#faf7ef;color:#26221d;font-family:Arial,system-ui,sans-serif}
-.announcement{background:#efe9dc;color:#756044;letter-spacing:1.2px}
-header{background:#faf7ef;border-color:#e9e2d6}
-.brand{color:#9a6a2d}.brandmark{background:#9a6a2d;border-radius:50%;font-family:Georgia,serif}
-.brandname,.sectionhead h2,.footbrand,.drawhead h3{font-family:Georgia,serif}
-.brandtag{color:#887c68}
-.search input{background:#fff;border-radius:28px;border-color:#e7dfd2;padding:14px 16px 14px 42px}
-.iconbtn{border:0;background:#f0eadf;border-radius:50%;color:#98703b}
-.hero{min-height:340px;border-radius:0;margin:14px 0 32px;background:linear-gradient(120deg,#e9dfcc,#f7f1e6 60%,#d9c8a9);color:#2a251e}
-.hero:after{background:radial-gradient(circle at 85% 25%,#ffffff77,transparent 34%)}
-.hero-content{color:#28231c;max-width:620px;padding:34px}
-.eyebrow{color:#9a6a2d;letter-spacing:2px}
-.hero h1{font-family:Georgia,serif;color:#252019;font-size:clamp(32px,6vw,50px);font-weight:500}
-.hero p{color:#6f6659;font-size:14px}
-.primary{background:#9a6a2d;color:#fff;border-radius:30px;padding:14px 22px}
-.sectionhead h2{font-size:29px;color:#30271d}
-.categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.cat{display:flex;align-items:center;justify-content:space-between;text-align:left;padding:13px 14px;border-radius:16px;color:#34291d;background:#fff;min-height:76px}
-.caticon{margin:0;width:48px;height:48px;border-radius:12px;background:#f2eee5;color:#9a6a2d;order:2}
-.cat span:last-child{font-family:Georgia,serif;font-size:16px;font-weight:500}
-.cat.active{background:#eee7d9;border-color:#d9c9ad}
-.filters{margin:8px 0}.chip{border-radius:24px;background:transparent}.chip.active{background:#9a6a2d;border-color:#9a6a2d}
-.products{gap:12px}.product{border-radius:20px;border-color:#e9e2d6;box-shadow:0 2px 7px #45341b0a}
-.photo{background:#f0eadf;aspect-ratio:4/4.8}.photo img{object-fit:cover}
-.heart{border-radius:50%;color:#9a6a2d}
-.pinfo{padding:13px}.pname{font-family:Georgia,serif;font-size:17px;font-weight:500;min-height:44px;color:#29231d}
-.pmeta{color:#827765;font-size:12px}.price{color:#9a6a2d;font-size:17px;font-weight:500}
-.add{background:#9a6a2d;border-radius:50%;width:38px;height:38px}
-.promiseitem{border-radius:16px;background:#f2eee5;border:0}.promiseicon{color:#9a6a2d}
-footer{background:#eee7d9;color:#4a3a27}.footnote{color:#7e705b}
-.bottomnav{background:#faf7ef;border-color:#e8dfd1}.navitem.active{color:#9a6a2d}
-.drawer{background:#faf7ef}.close{background:#eee7d9;color:#9a6a2d}.wide{background:#9a6a2d}
-.setup details{background:#fff;border-color:#e9e2d6}.setup button{background:#9a6a2d}
-@media(min-width:650px){.categories{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:950px){.categories{grid-template-columns:repeat(4,1fr)}}
-
-.profilepanel{padding:10px 0 22px}.profileuser{display:flex;align-items:center;gap:14px;padding:10px 4px 26px}
-.avatar{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:#eee5d5;color:#9a6a2d;font:28px Georgia,serif}
-.profileuser h2{font:30px Georgia,serif;margin:0 0 4px}.profileuser p{margin:0;color:var(--muted);font-size:13px}
-.profilelang,.profilelink{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;margin:10px 0}
-.langbuttons{display:flex;gap:5px;background:#f2eee5;padding:4px;border-radius:22px}
-.langbuttons button{border:0;background:transparent;border-radius:18px;padding:9px 12px;color:var(--muted);font-size:12px;font-weight:650}
-.langbuttons button.active{background:#9a6a2d;color:#fff}
-.profileheading{font-size:13px;letter-spacing:2px;color:#82796c;font-weight:800;margin:30px 5px 12px}
-.orderempty{text-align:center;color:#8c8275;font:italic 18px Georgia,serif;padding:25px 8px}
-.profilelink{justify-content:flex-start;gap:14px;text-decoration:none;color:var(--ink);font-size:16px}
-.profilelink .picon{color:#9a6a2d;width:25px;font-size:20px;text-align:center}
-.profilelink .pvalue{margin-left:auto;color:var(--muted);font-size:14px}
-.profileabout{font-size:13px;color:var(--muted);line-height:1.6;padding:4px 8px 18px}
-</style>
-</head>
-<body>
-<div class="announcement">JOJO BOLALAR DUNYOSI · FARZANDINGIZ UCHUN MEHR BILAN TANLANGAN</div>
-<header><div class="head">
-<a class="brand" href="#"><span class="brandmark">Jj</span><span><span class="brandname">JOJO STORE</span><span class="brandtag">BOLALAR DUNYOSI</span></span></a>
-<div class="search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="search" placeholder="Mahsulot qidirish..." aria-label="Mahsulot qidirish"></div>
-<div class="actions"><button class="iconbtn" id="favTop" aria-label="Sevimlilar"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg></button><button class="iconbtn" id="cartTop" aria-label="Savatcha"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3h2l2.2 12.2a2 2 0 0 0 2 1.7h8.9a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg><span class="count" id="cartCount">0</span></button></div>
-</div></header>
-<main>
-<section class="hero"><div class="hero-content"><div class="eyebrow">JOJO BOLALAR DUNYOSI</div><h1>Kichkintoylar uchun nafis tanlov</h1><p>Har bir kichkintoy uchun mehr bilan tanlangan sifatli va qulay kiyimlar.</p><button class="primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Katalogni ko‘rish <span>→</span></button></div></section>
-<section class="section"><div class="sectionhead"><div><h2>Kategoriyalar</h2><p>O‘zingizga kerakli bo‘limni tanlang</p></div></div>
-<div class="categories" id="categories">
-<button class="cat active" data-cat=""><span class="caticon">✦</span><span>Barchasi</span></button>
-<button class="cat" data-cat="Poyabzallar"><span class="caticon">✧</span><span>Poyabzallar</span></button>
-<button class="cat" data-cat="Shim va shortiklar"><span class="caticon">✧</span><span>Shim va shortiklar</span></button>
-<button class="cat" data-cat="Koftalar / svitshotlar"><span class="caticon">✧</span><span>Koftalar / svitshotlar</span></button>
-<button class="cat" data-cat="Sviterlar"><span class="caticon">✧</span><span>Sviterlar</span></button>
-<button class="cat" data-cat="Bodiylar"><span class="caticon">✧</span><span>Bodiylar</span></button>
-<button class="cat" data-cat="Slipperlar"><span class="caticon">✧</span><span>Slipperlar</span></button>
-<button class="cat" data-cat="Kambinzonlar"><span class="caticon">✧</span><span>Kambinzonlar</span></button>
-<button class="cat" data-cat="Paypoqlar"><span class="caticon">✧</span><span>Paypoqlar</span></button>
-<button class="cat" data-cat="Aksessuarlar"><span class="caticon">✧</span><span>Aksessuarlar</span></button>
-<button class="cat" data-cat="Shapkalar"><span class="caticon">✧</span><span>Shapkalar</span></button>
-<button class="cat" data-cat="Sumkalar"><span class="caticon">✧</span><span>Sumkalar</span></button>
-<button class="cat" data-cat="O‘yinchoqlar"><span class="caticon">✧</span><span>O‘yinchoqlar</span></button>
-<button class="cat" data-cat="Bolalar aravachasi"><span class="caticon">✧</span><span>Bolalar aravachasi</span></button>
-<button class="cat" data-cat="Bolalar belanchaklari"><span class="caticon">✧</span><span>Bolalar belanchaklari</span></button>
-<button class="cat" data-cat="Velosipedlar"><span class="caticon">✧</span><span>Velosipedlar</span></button>
-<button class="cat" data-cat="Pampers va salfetkalar"><span class="caticon">✧</span><span>Pampers va salfetkalar</span></button>
-<button class="cat" data-cat="Parfyumeriyalar"><span class="caticon">✧</span><span>Parfyumeriyalar</span></button>
-<button class="cat" data-cat="Zakolkalar"><span class="caticon">✧</span><span>Zakolkalar</span></button>
-<button class="cat" data-cat="Radom uchun kiyimlar"><span class="caticon">✧</span><span>Radom uchun kiyimlar</span></button>
-<button class="cat" data-cat="Ko‘ylaklar"><span class="caticon">✧</span><span>Ko‘ylaklar</span></button>
-</div><div class="age-filter-wrap"><div class="age-title">Yosh bo‘yicha tanlang</div><div class="filters" id="ageFilters"><button class="chip active" data-age="">Barcha yosh</button><button class="chip" data-age="1-oydan 1 yoshgacha">1-oydan 1 yoshgacha</button><button class="chip" data-age="6 oydan 24 oygacha">6 oydan 24 oygacha</button><button class="chip" data-age="1 yoshdan 5 yoshgacha">1 yoshdan 5 yoshgacha</button><button class="chip" data-age="2 yoshdan 6 yoshgacha">2 yoshdan 6 yoshgacha</button><button class="chip" data-age="5 yoshdan 10 yoshgacha">5 yoshdan 10 yoshgacha</button></div></div></section>
-<section class="section" id="catalog"><div class="sectionhead"><div><h2 id="catalogTitle">Yangi kolleksiya</h2><p id="catalogSub">JOJO tanlovi — siz uchun</p></div><button class="subtlebtn" id="allProducts">Barchasi →</button></div>
-<div class="filters"><button class="chip active" data-filter="all">Barchasi</button><button class="chip" data-filter="new">Yangi kelganlar</button><button class="chip" data-filter="favorites">Sevimlilar</button></div>
-<div class="products" id="products"><div class="empty">Katalogni yuklash uchun pastdagi ulanish sozlamalarini kiriting.</div></div></section>
-<section class="promise">
-<div class="promiseitem"><span class="promiseicon">✧</span><span><strong>Sifatli tanlov</strong><small>Har bir mahsulotga e’tibor</small></span></div>
-<div class="promiseitem"><span class="promiseicon">♡</span><span><strong>Mehr bilan</strong><small>Kichkintoylar uchun</small></span></div>
-<div class="promiseitem"><span class="promiseicon">⌂</span><span><strong>Oson xarid</strong><small>Oddiy va tushunarli</small></span></div>
-<div class="promiseitem"><span class="promiseicon">✉</span><span><strong>Biz bilan aloqa</strong><small>Savollaringizga javob</small></span></div>
-</section>
-</main>
-<div class="setup"><details><summary>Do‘kon ulanish sozlamalari (birinchi sozlash uchun)</summary><label>Supabase Project URL</label><input id="url" value="https://vnsyyqbgspxgbttmmuuz.supabase.co"><label>Publishable key</label><input id="key" placeholder="sb_publishable_..." autocomplete="off"><button id="connect">Katalogni ulash</button><div id="status" class="notice">Mahsulotlar bazasidan yuklanadi. Faqat e’lon qilingan mahsulotlar ko‘rinadi.</div></details></div>
-<footer><div class="footinner"><div><div class="footbrand">JOJO STORE</div><div class="footnote">Bolalar dunyosi — kichkintoylar uchun mehr bilan.</div></div><div class="footnote">© JOJO BOLALAR DUNYOSI</div></div></footer>
-<nav class="bottomnav">
-<button class="navitem active" id="navHome"><span>⌂</span>Bosh sahifa</button>
-<button class="navitem" id="navCatalog"><span>▦</span>Katalog</button>
-<button class="navitem" id="navCart"><span>🛒</span>Savat</button>
-<button class="navitem" id="navProfile"><span>♙</span>Profil</button>
-</nav>
-<div class="overlay" id="overlay"><div class="drawer"><div class="drawhead"><h3 id="drawerTitle">Savatcha</h3><button class="close" id="closeDrawer">×</button></div><div id="drawerContent"></div></div></div>
-<div id="imageLightbox" aria-hidden="true"><div class="lightbox-panel"><button class="lightbox-close" id="lightboxClose" aria-label="Yopish">×</button><div class="lightbox-image-wrap"><img id="lightboxImage" alt="Mahsulot rasmi kattalashtirilgan"></div><div class="lightbox-caption" id="lightboxCaption"></div></div></div>
+*{box-sizing:border-box}body{margin:0;background:#f6f3f1;color:#222;font-family:system-ui,sans-serif}.top{background:#512b3b;color:white;padding:18px}.top h1{font-size:21px;margin:0}.top p{margin:4px 0 0;font-size:13px}main{max-width:760px;margin:auto;padding:14px}.card{background:white;border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 12px #32101812}h2{font-size:18px;margin:0 0 12px}label{display:block;font-size:13px;font-weight:650;margin:12px 0 5px}input,textarea,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;font:inherit;background:#fff}textarea{min-height:70px}button{border:0;border-radius:10px;padding:12px 15px;background:#713b51;color:white;font:inherit;font-weight:650}.secondary{background:#eee;color:#333}.danger{background:#a83232}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}.hidden{display:none!important}#status{padding:10px;border-radius:10px;background:#f1e8ec;margin-bottom:12px;font-size:13px;white-space:pre-wrap}.product{display:flex;gap:10px;border-top:1px solid #eee;padding:12px 0;align-items:center}.product img{width:70px;height:85px;object-fit:cover;border-radius:8px;background:#eee}.info{flex:1;min-width:0}.info strong{display:block}.pill{font-size:11px;padding:3px 7px;border-radius:20px;background:#eee;display:inline-block;margin-top:5px}
+</style></head><body><header class="top"><h1>JOJO BOLALAR DUNYOSI</h1><p>Mahsulotlarni boshqarish paneli</p></header><main>
+<div id="status">Supabase Project URL va Publishable key ni kiriting. Secret/service_role kalitini kiritmang.</div>
+<section class="card" id="setup"><h2>1. Supabase ulanishi</h2><label>Project URL</label><input id="url" value="https://vnsyyqbgspxgbttmmuuz.supabase.co"><label>Publishable key</label><input id="key" placeholder="sb_publishable_..." autocomplete="off"><p><button id="connect">Ulanish</button></p></section>
+<section class="card hidden" id="login"><h2>2. Admin kirish</h2><label>Email</label><input id="email" type="email"><label>Parol</label><input id="password" type="password"><div class="row"><button id="signin">Kirish</button><button class="secondary" id="signout">Chiqish</button></div></section>
+<section class="card hidden" id="editor"><h2 id="formtitle">3. Mahsulot qo‘shish</h2><input id="pid" type="hidden"><label>Mahsulot nomi *</label><input id="name" placeholder="Pushti palto komplekti"><label>Kategoriya</label><select id="category"><option value="">Tanlang</option><option>Poyabzallar</option><option>Shim va shortiklar</option><option>Koftalar / svitshotlar</option><option>Sviterlar</option><option>Bodiylar</option><option>Slipperlar</option><option>Kambinzonlar</option><option>Paypoqlar</option><option>Aksessuarlar</option><option>Shapkalar</option><option>Sumkalar</option><option>O‘yinchoqlar</option><option>Bolalar aravachasi</option><option>Bolalar belanchaklari</option><option>Velosipedlar</option><option>Pampers va salfetkalar</option><option>Parfyumeriyalar</option><option>Zakolkalar</option><option>Radom uchun kiyimlar</option><option>Ko‘ylaklar</option></select><label>Yosh guruhi</label><select id="age_group"><option value="">Tanlanmagan</option><option>1-oydan 1 yoshgacha</option><option>6 oydan 24 oygacha</option><option>1 yoshdan 5 yoshgacha</option><option>2 yoshdan 6 yoshgacha</option><option>5 yoshdan 10 yoshgacha</option></select><div class="row"><div><label>Narxi (so‘m) *</label><input id="price" type="number" min="0"></div><div><label>Razmer</label><input id="size" placeholder="130 cm"></div></div><div class="row"><div><label>Soni</label><input id="quantity" type="number" min="0" value="1"></div><div><label>Holati</label><select id="published"><option value="false">Yashirin</option><option value="true">Do‘konda ko‘rinsin</option></select></div></div><label>Tavsif</label><textarea id="description"></textarea><label>Mahsulot rasmi</label><input id="photo" type="file" accept="image/*"><div class="row"><button id="save">Saqlash</button><button class="secondary" id="reset">Tozalash</button></div></section>
+<section class="card hidden" id="catalog"><div class="row"><h2 style="flex:2">Mahsulotlar</h2><button class="secondary" id="refresh">Yangilash</button></div><div id="items"></div></section>
+<section class="card hidden" id="orders"><div class="row"><h2 style="flex:2">Buyurtmalar</h2><button class="secondary" id="refreshOrders">Yangilash</button></div><div id="orderItems">Buyurtmalar yuklanmoqda...</div></section></main>
 <script>
-let db=null,products=[],category='',ageGroup='',filter='all',favorites=new Set(),cart={};
-const $=id=>document.getElementById(id);
-function fmt(n){return Number(n||0).toLocaleString('uz-UZ')+' so‘m'}
-function status(t){$('status').textContent=t}
+let sb=null,currentImage=null;const $=id=>document.getElementById(id);function msg(s){$('status').textContent=s}function show(id,on=true){$(id).classList.toggle('hidden',!on)}
+function resetForm(){['pid','name','category','age_group','price','size','description'].forEach(x=>$(x).value='');$('quantity').value=1;$('published').value='false';$('photo').value='';currentImage=null;$('formtitle').textContent='3. Mahsulot qo‘shish'}
+$('connect').onclick=async()=>{let url=$('url').value.trim(),key=$('key').value.trim();if(!url||!key){msg('Project URL va Publishable key ni kiriting.');return}try{sb=window.supabase.createClient(url,key);let {data,error}=await sb.auth.getSession();if(error)throw error;show('login');msg('Ulanish tayyor. Admin hisobingiz bilan kiring.');if(data.session){show('editor');show('catalog');show('orders');loadProducts();loadOrders()}}catch(e){msg('Ulanish xatosi: '+e.message)}};
+$('signin').onclick=async()=>{try{let {error}=await sb.auth.signInWithPassword({email:$('email').value,password:$('password').value});if(error)throw error;show('editor');show('catalog');show('orders');msg('Admin tizimga kirdi.');loadProducts();loadOrders()}catch(e){msg('Kirish xatosi: '+e.message)}};
+$('signout').onclick=async()=>{if(sb)await sb.auth.signOut();show('editor',false);show('catalog',false);show('orders',false);msg('Tizimdan chiqildi.')};$('reset').onclick=resetForm;$('refresh').onclick=loadProducts;$('refreshOrders').onclick=loadOrders;
+$('save').onclick=async()=>{if(!sb)return;let name=$('name').value.trim(),price=Number($('price').value);if(!name||!Number.isFinite(price)||price<0){msg('Mahsulot nomi va narxini to‘g‘ri kiriting.');return}try{let image_url=currentImage,file=$('photo').files[0];if(file){let ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,''),path='products/'+Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext;let {error}=await sb.storage.from('Products').upload(path,file,{contentType:file.type});if(error)throw error;image_url=sb.storage.from('Products').getPublicUrl(path).data.publicUrl}let record={name,category:$('category').value.trim(),age_group:$('age_group').value,price,size:$('size').value.trim(),quantity:Number($('quantity').value||0),description:$('description').value.trim(),image_url,published:$('published').value==='true'};let result=$('pid').value?await sb.from('products').update(record).eq('id',$('pid').value):await sb.from('products').insert(record);if(result.error)throw result.error;msg('Mahsulot saqlandi.');resetForm();loadProducts()}catch(e){msg('Saqlash xatosi: '+e.message)}};
+async function loadProducts(){try{let {data,error}=await sb.from('products').select('*').order('created_at',{ascending:false});if(error)throw error;$('items').innerHTML='';(data||[]).forEach(p=>{let d=document.createElement('div');d.className='product';let im=document.createElement('img');im.src=p.image_url||'';let inf=document.createElement('div');inf.className='info';let t=document.createElement('strong');t.textContent=p.name;let dt=document.createElement('div');dt.textContent=Number(p.price).toLocaleString('uz-UZ')+' so‘m · '+(p.size||'Razmer yo‘q')+' · Soni: '+p.quantity;let pill=document.createElement('span');pill.className='pill';pill.textContent=p.published?'Do‘konda':'Yashirin';inf.append(t,dt,pill);let ed=document.createElement('button');ed.textContent='Tahrir';ed.onclick=()=>editProduct(p);let del=document.createElement('button');del.className='danger';del.textContent='O‘chir';del.onclick=()=>deleteProduct(p.id);d.append(im,inf,ed,del);$('items').append(d)})}catch(e){msg('Mahsulotlarni olish xatosi: '+e.message)}}
+function editProduct(p){$('pid').value=p.id;$('name').value=p.name||'';$('category').value=p.category||'';$('age_group').value=p.age_group||'';$('price').value=p.price??'';$('size').value=p.size||'';$('quantity').value=p.quantity??0;$('description').value=p.description||'';$('published').value=String(!!p.published);currentImage=p.image_url||null;$('formtitle').textContent='Mahsulotni tahrirlash';window.scrollTo(0,0)}
+async function deleteProduct(id){if(!confirm('Mahsulotni o‘chirasizmi?'))return;let {error}=await sb.from('products').delete().eq('id',id);if(error)msg('O‘chirish xatosi: '+error.message);else{msg('Mahsulot o‘chirildi.');loadProducts()}}
+
 function safeText(v){return String(v??'')}
-function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function escapeAttr(v){return escapeHtml(v)}
-function render(){
- const q=$('search').value.trim().toLocaleLowerCase('uz-UZ');
- let list=products.filter(p=>(!category||safeText(p.category).toLocaleLowerCase('uz-UZ')===category.toLocaleLowerCase('uz-UZ'))&&(!ageGroup||safeText(p.age_group)===ageGroup)&&(!q||[p.name,p.category,p.description,p.size,p.age_group].join(' ').toLocaleLowerCase('uz-UZ').includes(q)));
- if(filter==='favorites')list=list.filter(p=>favorites.has(p.id));
- const root=$('products');root.innerHTML='';
- if(!list.length){root.innerHTML='<div class="empty">Bu bo‘limda hozircha mahsulot yo‘q.</div>';return}
- list.forEach(p=>{
-  const card=document.createElement('article');card.className='product';const photo=document.createElement('div');photo.className='photo';
-  const img=document.createElement('img');img.src=p.image_url||'';img.alt=p.name||'JOJO mahsuloti';img.loading='lazy';photo.append(img);img.addEventListener('click',()=>showProductImage(p.image_url||'',p.name||'Mahsulot'));
-  const heart=document.createElement('button');heart.className='heart'+(favorites.has(p.id)?' on':'');heart.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="'+(favorites.has(p.id)?'currentColor':'none')+'" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>';
-  heart.onclick=()=>{favorites.has(p.id)?favorites.delete(p.id):favorites.add(p.id);render()};photo.append(heart);
-  const info=document.createElement('div');info.className='pinfo';const name=document.createElement('div');name.className='pname';name.textContent=p.name||'Mahsulot';
-  const meta=document.createElement('div');meta.className='pmeta';meta.textContent=[p.category,p.size?'Razmer: '+p.size:''].filter(Boolean).join(' · ');
-  const foot=document.createElement('div');foot.className='pfoot';const price=document.createElement('div');price.className='price';price.textContent=fmt(p.price);
-  const add=document.createElement('button');add.className='add';add.setAttribute('aria-label','Savatchaga qo‘shish');add.innerHTML='<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M12 5v6m-3-3h6"/></svg>';add.onclick=()=>{cart[p.id]=(cart[p.id]||0)+1;updateCount();playCartSound();add.classList.remove('bump');void add.offsetWidth;add.classList.add('bump');openDrawer('cart')};
-  foot.append(price,add);info.append(name,meta,foot);card.append(photo,info);root.append(card);
- });
+function formatDate(v){if(!v)return 'Sana ko‘rsatilmagan';const d=new Date(v);return Number.isNaN(d.getTime())?safeText(v):d.toLocaleString('uz-UZ')}
+function orderItemsText(items){
+  if(!Array.isArray(items))return safeText(items||'Tarkib ko‘rsatilmagan');
+  return items.map(it=>{
+    if(typeof it==='string')return it;
+    if(!it||typeof it!=='object')return safeText(it);
+    const name=it.name||it.title||it.product_name||'Mahsulot';
+    const qty=it.quantity??it.qty??1;
+    const price=it.price??it.unit_price;
+    return `${name} × ${qty}${price!=null?' — '+Number(price).toLocaleString('uz-UZ')+' so‘m':''}`;
+  }).join('\n')||'Tarkib ko‘rsatilmagan';
 }
-function showProductImage(src,title){if(!src)return;const box=$('imageLightbox');$('lightboxImage').src=src;$('lightboxCaption').textContent=title;box.classList.add('open');box.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
-function closeProductImage(){const box=$('imageLightbox');box.classList.remove('open');box.setAttribute('aria-hidden','true');$('lightboxImage').src='';document.body.style.overflow=''}
-$('lightboxClose').onclick=closeProductImage;$('imageLightbox').onclick=e=>{if(e.target===$('imageLightbox'))closeProductImage()};document.addEventListener('keydown',e=>{if(e.key==='Escape')closeProductImage()});
-function playCartSound(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ctx=new C(),o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(740,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(1040,ctx.currentTime+.09);g.gain.setValueAtTime(.0001,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.10,ctx.currentTime+.015);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.18);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.19);o.onended=()=>ctx.close()}catch(e){}}
-function updateCount(){$('cartCount').textContent=Object.values(cart).reduce((a,b)=>a+b,0)}
-function openDrawer(which){
- $('overlay').classList.add('open');$('drawerTitle').textContent=which==='cart'?'Savatcha':'Sevimlilar';
- const root=$('drawerContent');root.innerHTML='';
- let list=which==='cart'?products.filter(p=>cart[p.id]):products.filter(p=>favorites.has(p.id));
- if(!list.length){root.innerHTML='<div class="empty">'+(which==='cart'?'Savatchangiz hozircha bo‘sh.':'Sevimli mahsulotlar hali tanlanmagan.')+'</div>';return}
- list.forEach(p=>{const row=document.createElement('div');row.className='cartrow';const im=document.createElement('img');im.src=p.image_url||'';const txt=document.createElement('div');txt.className='carttext';const strong=document.createElement('strong');strong.textContent=p.name;const small=document.createElement('small');small.textContent=fmt(p.price);txt.append(strong,small);row.append(im,txt);
- if(which==='cart'){const qty=document.createElement('div');qty.className='qty';const minus=document.createElement('button');minus.textContent='−';minus.onclick=()=>{cart[p.id]--;if(cart[p.id]<=0)delete cart[p.id];updateCount();openDrawer('cart')};const n=document.createElement('span');n.textContent=cart[p.id];const plus=document.createElement('button');plus.textContent='+';plus.onclick=()=>{cart[p.id]++;updateCount();openDrawer('cart')};qty.append(minus,n,plus);row.append(qty)}
- root.append(row)});
- if(which==='cart'){const total=list.reduce((s,p)=>s+p.price*cart[p.id],0);const sum=document.createElement('div');sum.className='total';sum.innerHTML='<span>Jami</span><span>'+fmt(total)+'</span>';root.append(sum);
- const form=document.createElement('form');form.className='checkout-form';form.id='checkoutForm';
- const sizeFields=list.map(p=>`<div class="size-entry"><label>${escapeHtml(p.name)} — kerakli razmer</label><input name="size_${escapeAttr(p.id)}" required maxlength="40" value="${escapeAttr(p.size||'')}" placeholder="Masalan: 110, 116 yoki 28"></div>`).join('');
- form.innerHTML=`<div class="profileheading">Har bir mahsulot uchun razmer</div>${sizeFields}<label>Ismingiz<input name="customer_name" required maxlength="100" placeholder="Ism familiya"></label><label>Telefon raqamingiz<input name="phone" required type="tel" maxlength="30" placeholder="+998 90 123 45 67" value="+998932608221"></label><div class="profileheading">Buyurtmani qanday olasiz?</div><div class="delivery-options"><label class="delivery-option"><input type="radio" name="delivery_method" value="pickup" checked> Do‘kondan olib ketaman</label><label class="delivery-option"><input type="radio" name="delivery_method" value="delivery"> Yetkazib berilsin</label></div><label id="addressLabel" style="display:none">Yetkazib berish manzili<textarea name="address" maxlength="500" placeholder="Viloyat, tuman, ko‘cha, uy"></textarea></label><div class="notice">Do‘kon manzili: Islom Karimov ko‘chasi, Namangan</div><div class="map-links"><a href="https://maps.app.goo.gl/iWLK8V6L2WFPpctPA" target="_blank" rel="noopener">Google Maps</a><a href="https://yandex.com/maps/?text=Jojo%20Bolalar%20dunyosi%2C%20Islom%20Karimov%20ko%27chasi%2C%20Namangan" target="_blank" rel="noopener">Yandex Maps</a><a href="https://maps.apple.com/?q=Jojo%20Bolalar%20dunyosi%2C%20Islom%20Karimov%20ko%27chasi%2C%20Namangan" target="_blank" rel="noopener">Apple Maps</a></div><button class="wide" type="submit" id="sendOrder">Buyurtmani yuborish</button><div class="notice">Buyurtma yuborilgach, do‘kon siz bilan telefon orqali bog‘lanadi.</div><div id="checkoutMessage" class="checkout-error" role="status"></div>`;
- const methodRadios=form.querySelectorAll('[name="delivery_method"]');methodRadios.forEach(r=>r.addEventListener('change',()=>{const delivery=form.querySelector('[name="delivery_method"]:checked').value==='delivery';const label=form.querySelector('#addressLabel');label.style.display=delivery?'block':'none';label.querySelector('textarea').required=delivery}));
- form.addEventListener('submit',submitOrder);root.append(form)}
-}
-$('closeDrawer').onclick=()=>$('overlay').classList.remove('open');$('overlay').onclick=e=>{if(e.target===$('overlay'))$('overlay').classList.remove('open')};
-$('cartTop').onclick=()=>openDrawer('cart');$('navCart').onclick=()=>openDrawer('cart');$('favTop').onclick=()=>openDrawer('favorites');
-$('search').addEventListener('input',render);
-document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));b.classList.add('active');category=b.dataset.cat||'';render();document.getElementById('catalog').scrollIntoView({behavior:'smooth'})});
-document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render()});
-document.querySelectorAll('#ageFilters .chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('#ageFilters .chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');ageGroup=b.dataset.age||'';render()});
-$('allProducts').onclick=()=>{category='';ageGroup='';filter='all';document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('active',!x.dataset.cat));document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x.dataset.filter==='all'||x.dataset.age===''));render()};
-
-
-async function submitOrder(event){
- event.preventDefault();
- const form=event.currentTarget,button=$('sendOrder'),message=$('checkoutMessage');
- const data=new FormData(form);
- const customer_name=String(data.get('customer_name')||'').trim();
- const phone=String(data.get('phone')||'').trim();
- const delivery_method=String(data.get('delivery_method')||'pickup');
- const address=delivery_method==='delivery'?String(data.get('address')||'').trim():'Do‘kondan olib ketish — JOJO STORE, Islom Karimov ko‘chasi, Namangan';
- const items=products.filter(p=>cart[p.id]).map(p=>({product_id:p.id,name:p.name,price:Number(p.price),quantity:Number(cart[p.id]),size:String(data.get('size_'+p.id)||'').trim()}));
- if(items.some(item=>!item.size)){message.textContent='Har bir mahsulot uchun razmerni tanlang yoki yozing.';return}
- if(delivery_method==='delivery'&&!address){message.textContent='Yetkazib berish manzilini kiriting.';return}
- const total=items.reduce((sum,item)=>sum+item.price*item.quantity,0);
- if(!items.length){message.textContent='Savatcha bo‘sh.';return}
- button.disabled=true;button.textContent='Yuborilmoqda...';message.textContent='';
- try{
-  const response=await fetch('https://vnsyyqbgspxgbttmmuuz.supabase.co/functions/v1/smooth-api',{
-   method:'POST',headers:{'Content-Type':'application/json'},
-   body:JSON.stringify({customer_name,phone,address,delivery_method,items,total})
-  });
-  const result=await response.json().catch(()=>({}));
-  if(!response.ok||!result.success)throw new Error(result.message||result.error||('Server xatosi: '+response.status));
-  cart={};updateCount();
-  $('drawerTitle').textContent='Buyurtma qabul qilindi';
-  $('drawerContent').innerHTML='<div class="empty">Rahmat! Buyurtmangiz saqlandi. Tez orada siz bilan bog‘lanamiz.</div><div class="notice">Buyurtma raqami: '+String(result.order_id||'').replace(/[<>]/g,'')+'<br>Telegram xabari: '+(result.telegram_sent?'yuborildi':'hozircha yuborilmadi')+'</div>';
- }catch(error){message.textContent='Buyurtma yuborilmadi: '+error.message;button.disabled=false;button.textContent='Qayta yuborish'}
+async function loadOrders(){
+  if(!sb)return;
+  const root=$('orderItems');root.textContent='Buyurtmalar yuklanmoqda...';
+  try{
+    const {data,error}=await sb.from('orders')
+      .select('id,customer_name,phone,address,items,total,status,created_at')
+      .order('created_at',{ascending:false});
+    if(error)throw error;
+    root.innerHTML='';
+    if(!data||!data.length){root.textContent='Hozircha buyurtmalar yo‘q.';return;}
+    data.forEach(o=>{
+      const card=document.createElement('div');
+      card.style.cssText='border-top:1px solid #eee;padding:14px 0;display:grid;gap:6px';
+      const heading=document.createElement('strong');
+      heading.textContent=`Buyurtma #${String(o.id).slice(0,8)} · ${formatDate(o.created_at)}`;
+      const customer=document.createElement('div');
+      customer.textContent=`Mijoz: ${safeText(o.customer_name)} · Tel: ${safeText(o.phone)}`;
+      const address=document.createElement('div');
+      address.textContent='Manzil: '+safeText(o.address);
+      const contents=document.createElement('div');
+      contents.style.cssText='white-space:pre-line;color:#51434a;font-size:13px';
+      contents.textContent='Mahsulotlar:\n'+orderItemsText(o.items);
+      const total=document.createElement('strong');
+      total.textContent='Jami: '+Number(o.total||0).toLocaleString('uz-UZ')+' so‘m';
+      const status=document.createElement('span');
+      status.className='pill';
+      status.textContent='Holati: '+safeText(o.status||'new');
+      card.append(heading,customer,address,contents,total,status);
+      root.append(card);
+    });
+  }catch(e){
+    root.textContent='Buyurtmalarni olish xatosi: '+e.message;
+  }
 }
 
-function showProfile(){
- const lang=localStorage.getItem('jojo_lang')||'uz-lat';
- const cyr=lang==='uz-cyr';
- const t=cyr?{
-  profile:'Профиль',language:'Интерфейс тили',lat:'Ўзбекча · Lotin',cyr:'Ўзбекча · Кирилл',orders:'БУЮРТМАЛАР ТАРИХИ',empty:'Бу ерда буюртмаларингиз кўринади',settings:'СОЗЛАМАЛАР',address:'Дўкон манзили',addressValue:'Ислам Каримов кўчаси',telegram:'Telegram канал',contact:'Биз билан боғланиш',phone:'+998 93 260 82 21',instagram:'Instagram',instagramValue:'@jojo_shop_nam',about:'Дўкон ҳақида',aboutText:'JOJO BOLALAR DUNYOSI — кичкинтойлар учун сифатли ва қулай кийимлар. Харидларингиз учун раҳмат!'
- }:{
-  profile:'Profil',language:'Interfeys tili',lat:'O‘zbekcha · Lotin',cyr:'Ўзбекча · Кирилл',orders:'BUYURTMALAR TARIXI',empty:'Bu yerda buyurtmalaringiz ko‘rinadi',settings:'SOZLAMALAR',address:'Do‘kon manzili',addressValue:'Islom Karimov ko‘chasi',telegram:'Telegram kanal',contact:'Biz bilan bog‘lanish',phone:'+998 93 260 82 21',instagram:'Instagram',instagramValue:'@jojo_shop_nam',about:'Do‘kon haqida',aboutText:'JOJO BOLALAR DUNYOSI — kichkintoylar uchun sifatli va qulay kiyimlar. Xaridlaringiz uchun rahmat!'
- };
- $('drawerTitle').textContent=t.profile;
- const tg=window.Telegram?.WebApp?.initDataUnsafe?.user;
- const displayName=tg?[tg.first_name,tg.last_name].filter(Boolean).join(' '):'Mehmon';
- const username=tg?.username?'@'+tg.username:(cyr?'Telegram орқали кирилмаган':'Telegram orqali kirilmagan');
- $('drawerContent').innerHTML=`
- <div class="profilepanel">
-  <div class="profileuser"><div class="avatar">J</div><div><h2>${displayName.replace(/[<>]/g,'')}</h2><p>${username.replace(/[<>]/g,'')}</p></div></div>
-  <div class="profilelang"><span>${t.language}</span><div class="langbuttons"><button data-lang="uz-lat" class="${!cyr?'active':''}">${t.lat}</button><button data-lang="uz-cyr" class="${cyr?'active':''}">${t.cyr}</button></div></div>
-  <div class="profileheading">${t.orders}</div>
-  <div class="orderempty">${t.empty}</div>
-  <div class="profileheading">${t.settings}</div>
-  <div class="profilelink"><span class="picon">⌖</span><span>${t.address}</span><span class="pvalue">${t.addressValue}</span></div><div class="map-links"><a href="https://maps.app.goo.gl/iWLK8V6L2WFPpctPA" target="_blank" rel="noopener">Google Maps</a><a href="https://yandex.com/maps/?text=Jojo%20Bolalar%20dunyosi%2C%20Islom%20Karimov%20ko%27chasi%2C%20Namangan" target="_blank" rel="noopener">Yandex Maps</a><a href="https://maps.apple.com/?q=Jojo%20Bolalar%20dunyosi%2C%20Islom%20Karimov%20ko%27chasi%2C%20Namangan" target="_blank" rel="noopener">Apple Maps</a></div>
-  <a class="profilelink" href="https://t.me/jojo_nam" target="_blank"><span class="picon">➤</span><span>${t.telegram}</span><span class="pvalue">@jojo_nam</span></a>
-  <a class="profilelink" href="tel:+998932608221"><span class="picon">☎</span><span>${t.contact}</span><span class="pvalue">${t.phone}</span></a>
-  <a class="profilelink" href="https://instagram.com/jojo_shop_nam" target="_blank" rel="noopener"><span class="picon">◎</span><span>${t.instagram}</span><span class="pvalue">${t.instagramValue}</span></a>
-  <div class="profilelink"><span class="picon">ⓘ</span><span>${t.about}</span></div>
-  <div class="profileabout">${t.aboutText}</div>
- </div>`;
- $('drawerContent').querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{
-  localStorage.setItem('jojo_lang',b.dataset.lang);showProfile();
- });
- $('overlay').classList.add('open');
-}
-async function connectStore(save=true){
- const url=$('url').value.trim(),key=$('key').value.trim();
- if(!url||!key){status('Project URL va Publishable key ni kiriting.');return}
- try{
-  if(save){localStorage.setItem('jojo_supabase_url',url);localStorage.setItem('jojo_supabase_key',key);}
-  db=window.supabase.createClient(url,key);
-  status('Katalog yuklanmoqda...');
-  const {data,error}=await db.from('products').select('id,name,category,age_group,price,size,description,image_url,quantity,created_at').eq('published',true).order('created_at',{ascending:false});
-  if(error)throw error;
-  products=data||[];render();
-  status(products.length?'Katalog tayyor: '+products.length+' ta mahsulot.':'Hozircha e’lon qilingan mahsulot yo‘q.');
- }catch(e){status('Ulanish xatosi: '+e.message)}
-}
-$('connect').onclick=()=>connectStore(true);
-window.addEventListener('DOMContentLoaded',()=>{
- const savedUrl=localStorage.getItem('jojo_supabase_url');
- const savedKey=localStorage.getItem('jojo_supabase_key');
- if(savedUrl)$('url').value=savedUrl;
- if(savedKey){$('key').value=savedKey;connectStore(false);}
- $('navProfile').onclick=showProfile;
- $('navHome').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
- $('navCatalog').onclick=()=>document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
-});
-</script>
-</body></html>
+</script></body></html>
