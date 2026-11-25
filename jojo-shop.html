@@ -37,7 +37,6 @@ footer{background:#432333;color:#f5eaf0;padding:26px 18px;margin-top:32px}.footi
 .cartrow{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);align-items:center}.cartrow img{width:58px;height:68px;object-fit:cover;border-radius:9px;background:#eee}.carttext{flex:1;min-width:0}.carttext strong{font-size:12px;display:block}.carttext small{color:var(--muted);font-size:10px}.qty{display:flex;align-items:center;gap:8px}.qty button{border:1px solid var(--line);background:#fff;border-radius:7px;width:25px;height:25px;color:var(--wine)}
 .total{display:flex;justify-content:space-between;font-weight:800;color:var(--wine);padding:15px 0}.wide{width:100%;justify-content:center;background:var(--wine);color:#fff;border:0;border-radius:11px;padding:13px;font-weight:750}.notice{font-size:11px;color:var(--muted);line-height:1.6;margin-top:10px}.checkout-form{display:grid;gap:9px;margin-top:14px}.checkout-form label{font-size:11px;color:var(--muted);font-weight:700}.checkout-form input,.checkout-form textarea{display:block;width:100%;margin-top:5px;border:1px solid var(--line);border-radius:9px;padding:12px;background:#fff;color:var(--ink);font:inherit;font-size:13px;outline:none}.checkout-form textarea{min-height:70px;resize:vertical}.checkout-form .wide{margin-top:3px}.checkout-error{color:#b42318;font-size:12px;margin-top:8px}
 #imageLightbox{position:fixed;inset:0;z-index:90;background:rgba(15,12,13,.94);display:none;align-items:center;justify-content:center;padding:12px}#imageLightbox.open{display:flex}.lightbox-panel{position:relative;width:96vw;height:96vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}.lightbox-image-wrap{width:96vw;height:calc(96vh - 48px);background:transparent;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center}.lightbox-image-wrap img{width:100%;height:100%;object-fit:contain;display:block;image-rendering:auto}.lightbox-image-wrap img.loading{opacity:.5}.lightbox-caption{color:#fff;font-size:14px;text-align:center;font-weight:650}.lightbox-close{position:fixed;right:calc(12px + env(safe-area-inset-right));top:calc(12px + env(safe-area-inset-top));z-index:92;border:0;border-radius:50%;width:46px;height:46px;background:#fff;color:#432333;font-size:28px;line-height:1;display:grid;place-items:center;box-shadow:0 3px 14px #0005}.photo img:hover{filter:brightness(.97)}@media(max-width:420px){.lightbox-panel{width:96vw;height:96vh}.lightbox-image-wrap{width:96vw;height:calc(96vh - 48px)}}
-.setup{max-width:1180px;margin:18px auto;padding:0 18px}.setup details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px}.setup summary{font-size:11px;color:var(--muted);cursor:pointer}.setup label{display:block;font-size:11px;margin:10px 0 4px}.setup input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px}.setup button{background:var(--wine);color:#fff;border:0;border-radius:8px;padding:10px 14px;margin-top:10px;font-size:11px}
 @media(min-width:650px){body{padding-bottom:0}.announcement{font-size:12px}.head{padding:16px 22px}.brandname{font-size:22px}.hero{min-height:300px;margin-top:25px}.hero-content{padding:42px}.categories{grid-template-columns:repeat(6,1fr);gap:13px}.products{grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.photo{aspect-ratio:4/4.7}.pinfo{padding:14px}.pname{font-size:14px}.price{font-size:15px}.promise{grid-template-columns:repeat(4,1fr)}.bottomnav{display:none}.overlay{align-items:center}.drawer{border-radius:20px;margin:20px}.search{margin-left:25px}}
 @media(min-width:950px){.products{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{min-height:340px}.hero-content{padding:52px}.categories{grid-template-columns:repeat(8,1fr)}}
 @media(max-width:390px){.brandtag{letter-spacing:1px}.brandname{font-size:16px}.brandmark{width:36px;height:36px}.head{gap:9px;padding:11px}.actions{gap:4px}.iconbtn{width:37px;height:37px}.hero-content{padding:23px 20px}.categories{gap:7px}.cat{padding:11px 3px}.cat span:last-child{font-size:10px}}
@@ -75,7 +74,6 @@ header{background:#faf7ef;border-color:#e9e2d6}
 footer{background:#eee7d9;color:#4a3a27}.footnote{color:#7e705b}
 .bottomnav{background:#faf7ef;border-color:#e8dfd1}.navitem.active{color:#9a6a2d}
 .drawer{background:#faf7ef}.close{background:#eee7d9;color:#9a6a2d}.wide{background:#9a6a2d}
-.setup details{background:#fff;border-color:#e9e2d6}.setup button{background:#9a6a2d}
 @media(min-width:650px){.categories{grid-template-columns:repeat(4,1fr)}}
 @media(min-width:950px){.categories{grid-template-columns:repeat(4,1fr)}}
 
@@ -137,7 +135,6 @@ footer{background:#eee7d9;color:#4a3a27}.footnote{color:#7e705b}
 <div class="promiseitem"><span class="promiseicon">✉</span><span><strong>Biz bilan aloqa</strong><small>Savollaringizga javob</small></span></div>
 </section>
 </main>
-<div class="setup"><details><summary>Do‘kon ulanish holati va qayta yuklash</summary><label>Supabase Project URL</label><input id="url" value="https://vnsyyqbgspxgbttmmuuz.supabase.co"><label>Publishable key</label><input id="key" placeholder="sb_publishable_..." autocomplete="off"><button id="connect">Katalogni ulash</button><div id="status" class="notice" role="status" aria-live="polite">Katalog avtomatik ulanmoqda. Faqat e’lon qilingan mahsulotlar ko‘rinadi.</div><div class="notice">Katalog barcha mijozlarning telefonlari va brauzerlarida avtomatik ulanadi. Maxfiy service_role kaliti ishlatilmaydi.</div></details></div>
 <footer><div class="footinner"><div><div class="footbrand">JOJO STORE</div><div class="footnote">Bolalar dunyosi — kichkintoylar uchun mehr bilan.</div></div><div class="footnote">© JOJO BOLALAR DUNYOSI</div></div></footer>
 <nav class="bottomnav">
 <button class="navitem active" id="navHome"><span>⌂</span>Bosh sahifa</button>
@@ -380,8 +377,6 @@ async function connectStore(save=true, quiet=false){
  catalogLoadPromise=(async()=>{
   try{
    // Always use the built-in public connection, not browser-specific localStorage.
-   $('url').value=JOJO_SUPABASE_URL;
-   $('key').value=JOJO_SUPABASE_PUBLISHABLE_KEY;
    if(!db){
     if(!window.supabase?.createClient)throw new Error('Supabase kutubxonasi yuklanmadi. Internetni tekshiring.');
     db=window.supabase.createClient(JOJO_SUPABASE_URL,JOJO_SUPABASE_PUBLISHABLE_KEY,{
@@ -459,12 +454,8 @@ function startCatalogAutoRefresh(){
   if(!document.hidden)connectStore(false,true);
  });
 }
-$('connect').textContent='Katalogni yangilash';
-$('connect').onclick=()=>connectStore(false,false);
 window.addEventListener('DOMContentLoaded',()=>{
  initTelegramMiniApp();
- $('url').value=JOJO_SUPABASE_URL;
- $('key').value=JOJO_SUPABASE_PUBLISHABLE_KEY;
  $('navProfile').onclick=showProfile;
  $('navHome').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
  $('navCatalog').onclick=()=>document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
