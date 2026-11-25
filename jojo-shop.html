@@ -26,7 +26,15 @@ main{max-width:1180px;margin:auto;padding:0 18px}
 .section{margin:24px 0 30px}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px}.sectionhead h2{font-family:Georgia,serif;font-weight:600;font-size:23px;margin:0;color:var(--wine)}.sectionhead p{font-size:11px;color:var(--muted);margin:5px 0 0}.subtlebtn{border:0;background:transparent;color:var(--wine2);font-size:11px;font-weight:700;padding:8px}
 .categories{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.cat{border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px 6px;text-align:center;color:var(--wine);transition:.18s}.cat:active,.cat.active{border-color:#b995a5;background:#f6eef1}.caticon{width:42px;height:42px;margin:0 auto 8px;border-radius:14px;background:#f5edf0;display:grid;place-items:center}.cat span:last-child{font-size:11px;font-weight:700}
 .age-filter-wrap{margin-top:18px}.age-title{font-size:13px;font-weight:750;color:#756044;margin:0 0 8px}.filters{display:flex;gap:7px;overflow:auto;padding:1px 0 8px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}.chip{white-space:nowrap;border:1px solid var(--line);background:#fff;color:#71636a;border-radius:99px;padding:8px 13px;font-size:11px}.chip.active{background:var(--wine);border-color:var(--wine);color:#fff}
-.catalog-status{font-size:11px;color:#827765;background:#f2eee5;border:1px solid #e9e2d6;border-radius:10px;padding:9px 12px;margin:0 0 12px}.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;min-width:0}.photo{position:relative;background:#f1ecee;aspect-ratio:4/5;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s;cursor:zoom-in}.product:active .photo img{transform:scale(1.02)}.heart{position:absolute;right:9px;top:9px;width:34px;height:34px;border:0;border-radius:50%;background:#ffffffeb;display:grid;place-items:center;color:#765464}.heart.on{color:#bd526f}.tag{position:absolute;left:9px;top:9px;background:#fff;color:var(--wine);font-size:9px;font-weight:800;border-radius:6px;padding:6px 8px}
+.catalog-status{font-size:11px;color:#827765;background:#f2eee5;border:1px solid #e9e2d6;border-radius:10px;padding:9px 12px;margin:0 0 12px}
+.jojo-admin-settings{max-width:1180px;margin:12px auto 0;padding:0 18px;color:#6f6659;font-size:11px}
+.jojo-admin-settings details{background:#fff;border:1px solid #e9e2d6;border-radius:12px;padding:13px}
+.jojo-admin-settings summary{cursor:pointer;font-weight:700;color:#756044}
+.jojo-admin-settings label{display:block;margin:10px 0 4px}
+.jojo-admin-settings input{width:100%;padding:10px;border:1px solid #e9e2d6;border-radius:8px;background:#faf7ef;color:#6f6659;font-size:11px}
+.jojo-admin-settings button{margin-top:10px;border:0;border-radius:8px;padding:10px 14px;background:#9a6a2d;color:#fff;font-weight:700}
+#jojoAdminSettings[hidden]{display:none!important}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;min-width:0}.photo{position:relative;background:#f1ecee;aspect-ratio:4/5;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s;cursor:zoom-in}.product:active .photo img{transform:scale(1.02)}.heart{position:absolute;right:9px;top:9px;width:34px;height:34px;border:0;border-radius:50%;background:#ffffffeb;display:grid;place-items:center;color:#765464}.heart.on{color:#bd526f}.tag{position:absolute;left:9px;top:9px;background:#fff;color:var(--wine);font-size:9px;font-weight:800;border-radius:6px;padding:6px 8px}
 .pinfo{padding:11px}.pname{font-size:12px;font-weight:700;line-height:1.4;min-height:34px}.pmeta{font-size:10px;color:var(--muted);margin-top:4px}.pfoot{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-top:10px}.price{font-size:13px;font-weight:800;color:var(--wine)}.add{width:38px;height:38px;border:0;border-radius:12px;background:var(--wine);color:#fff;display:grid;place-items:center;flex-shrink:0;box-shadow:0 5px 12px #4b263733;transition:transform .18s,background .18s}.add:active{transform:scale(.88)}.add.bump{animation:cartPop .48s ease}@keyframes cartPop{0%{transform:scale(1)}35%{transform:scale(1.28) rotate(-8deg)}70%{transform:scale(.92) rotate(5deg)}100%{transform:scale(1)}}
 .checkout-form select{display:block;width:100%;margin-top:5px;border:1px solid var(--line);border-radius:9px;padding:12px;background:#fff;color:var(--ink);font:inherit;font-size:13px}.size-entry{margin-top:9px}.size-entry label{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-bottom:4px}.size-entry input{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;font-size:12px}.size-options{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}.size-choice{position:relative}.size-entry .size-choice input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;margin:0;padding:0;display:block}.size-choice span{display:inline-flex;min-width:42px;min-height:40px;align-items:center;justify-content:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-size:13px;font-weight:750}.size-choice input:checked+span{background:var(--wine);border-color:var(--wine);color:#fff;box-shadow:0 3px 10px #9a6a2d33}.size-choice input:focus-visible+span{outline:2px solid var(--wine2);outline-offset:2px}.delivery-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.delivery-option{border:1px solid var(--line);border-radius:10px;padding:11px;font-size:12px;color:var(--ink);display:flex;gap:8px;align-items:center}.delivery-option input{width:auto;margin:0}.map-links{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.map-links a{font-size:11px;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:9px 11px;color:var(--wine);background:#fff}.contact-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.contact-links a{color:var(--wine);font-size:12px;text-decoration:none;font-weight:700}
 .empty{grid-column:1/-1;text-align:center;background:#fff;border:1px dashed #dfd1d8;border-radius:15px;padding:32px 15px;color:var(--muted);font-size:13px}
@@ -134,6 +142,17 @@ footer{background:#eee7d9;color:#4a3a27}.footnote{color:#7e705b}
 <div class="promiseitem"><span class="promiseicon">⌂</span><span><strong>Oson xarid</strong><small>Oddiy va tushunarli</small></span></div>
 <div class="promiseitem"><span class="promiseicon">✉</span><span><strong>Biz bilan aloqa</strong><small>Savollaringizga javob</small></span></div>
 </section>
+<section id="jojoAdminSettings" class="jojo-admin-settings" hidden aria-label="JOJO admin sozlamalari">
+ <details>
+  <summary>Do‘kon ulanish holati va qayta yuklash</summary>
+  <label>Supabase Project URL</label>
+  <input id="jojoAdminProjectUrl" type="text" readonly value="https://vnsyyqbgspxgbttmmuuz.supabase.co">
+  <label>Publishable key</label>
+  <input id="jojoAdminPublishableKey" type="text" readonly value="sb_publishable_BNnPc3dNyMf4sIxTTOJWAw_VI6Bx1gp">
+  <button id="jojoAdminReload" type="button">Katalogni qayta yuklash</button>
+  <p id="jojoAdminConnectionStatus" aria-live="polite">Katalog holati tekshirilmoqda...</p>
+ </details>
+</section>
 </main>
 <footer><div class="footinner"><div><div class="footbrand">JOJO STORE</div><div class="footnote">Bolalar dunyosi — kichkintoylar uchun mehr bilan.</div></div><div class="footnote">© JOJO BOLALAR DUNYOSI</div></div></footer>
 <nav class="bottomnav">
@@ -148,7 +167,7 @@ footer{background:#eee7d9;color:#4a3a27}.footnote{color:#7e705b}
 let db=null,products=[],category='',ageGroup='',filter='all',favorites=new Set(),cart={};
 const $=id=>document.getElementById(id);
 function fmt(n){return Number(n||0).toLocaleString('uz-UZ')+' so‘m'}
-function status(t){const a=$('status');const b=$('catalogStatus');if(a)a.textContent=t;if(b)b.textContent=t}
+function status(t){const a=$('status');const b=$('catalogStatus');const c=$('jojoAdminConnectionStatus');if(a)a.textContent=t;if(b)b.textContent=t;if(c)c.textContent=t}
 function safeText(v){return String(v??'')}
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function escapeAttr(v){return escapeHtml(v)}
@@ -185,6 +204,24 @@ function render(){
  });
 }
 const jojoTelegramApp=window.Telegram?.WebApp||null;
+const JOJO_OWNER_TELEGRAM_ID = 2030302378;
+function revealJojoAdminSettings(){
+ const panel=$('jojoAdminSettings');
+ if(!panel)return;
+ const telegramUser=jojoTelegramApp?.initDataUnsafe?.user;
+ const isOwnerInsideTelegram=!!jojoTelegramApp && Number(telegramUser?.id)===JOJO_OWNER_TELEGRAM_ID;
+ panel.hidden=!isOwnerInsideTelegram;
+ if(isOwnerInsideTelegram){
+  const statusNode=$('catalogStatus');
+  $('jojoAdminConnectionStatus').textContent=statusNode?.textContent||'Katalog avtomatik yangilanadi.';
+  $('jojoAdminReload').onclick=async()=>{
+   $('jojoAdminReload').disabled=true;
+   $('jojoAdminConnectionStatus').textContent='Katalog qayta yuklanmoqda...';
+   try{await connectStore(false,false);}
+   finally{ $('jojoAdminReload').disabled=false; $('jojoAdminConnectionStatus').textContent=statusNode?.textContent||'Tekshiruv yakunlandi.'; }
+  };
+ }
+}
 function initTelegramMiniApp(){
  if(!jojoTelegramApp)return;
  try{
@@ -456,6 +493,7 @@ function startCatalogAutoRefresh(){
 }
 window.addEventListener('DOMContentLoaded',()=>{
  initTelegramMiniApp();
+ revealJojoAdminSettings();
  $('navProfile').onclick=showProfile;
  $('navHome').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
  $('navCatalog').onclick=()=>document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
